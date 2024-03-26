@@ -26,7 +26,7 @@ const checkString = (location: Validator, field: string) => location(field).exis
 
 const userValidation = [
     checkEmail(body, "email"),
-    checkPassword(body, "password", 8)
+    checkPassword(body, "password", parseInt(process.env.MIN_PASSWORD_LENGTH!))
 ];
 
 const noteValidation = [
