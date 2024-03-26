@@ -2,13 +2,13 @@ import { QueryOptions, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import pool from "../utils/mysql.util";
 import bcrypt from "bcrypt";
 
-interface User {
+export interface IUser {
     id: number;
     email: string;
     encrypted_password: string;
 }
 
-const createUser = async (email: string, password: string): Promise<ResultSetHeader> => {
+const create = async (email: string, password: string): Promise<ResultSetHeader> => {
     const hashedPassword = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS!))
 
     const queryOptions: QueryOptions = {
@@ -21,8 +21,15 @@ const createUser = async (email: string, password: string): Promise<ResultSetHea
     return result;
 };
 
-const getLoginUser = async (email: string, password: string): Promise<Pick<User, "id" | "email"> | null> => {
-    const user = await getUserByEmail(email);
+const get = async (email: string, password: string): Promise<Pick<IUser, "id" | "email"> | null> => {
+    const queryOptions: QueryOptions = {
+        sql: `SELECT * FROM users WHERE email = ?`,
+        values: [email]
+    };
+
+    const [rows] = await pool.query<RowDataPacket[]>(queryOptions);
+
+    const user = rows.length ? rows[0] as IUser : null;
 
     if (user && await bcrypt.compare(password, user.encrypted_password)) {
         return { id: user.id, email: user.email };
@@ -31,35 +38,9 @@ const getLoginUser = async (email: string, password: string): Promise<Pick<User,
     }
 };
 
-const getUserInfo = async (id: number): Promise<Pick<User, "id" | "email"> | null> => {
-    const user = await getUserById(id);
-
-    return user ? { id: user.id, email: user.email } : null;
+const User = {
+    create,
+    get,
 };
 
-const getUserByEmail = async (email: string): Promise<User | null> => {
-    return _getUserByField('email', email);
-};
-
-const getUserById = async (id: number): Promise<User | null> => {
-    return _getUserByField('id', id);
-};
-
-const _getUserByField = async (field: 'id' | 'email', value: string | number): Promise<User | null> => {
-    const queryOptions: QueryOptions = {
-        sql: `SELECT * FROM users WHERE ${field} = ?`,
-        values: [value]
-    };
-
-    const [rows] = await pool.query<RowDataPacket[]>(queryOptions);
-
-    return rows.length ? rows[0] as User : null;
-};
-
-const userModel = {
-    createUser,
-    getLoginUser,
-    getUserInfo,
-};
-
-export default userModel;
+export default User;
