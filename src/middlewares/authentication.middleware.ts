@@ -5,7 +5,7 @@ import { IUser } from "../models/user.model";
 
 declare module "express-serve-static-core" {
     interface Request {
-        user?: IUser;
+        user?: Omit<IUser, "encrypted_password">;
     }
 }
 
@@ -18,6 +18,6 @@ export const authenticateUser = async (req: Request, res: Response, next: NextFu
 
     const user = jwt.verify(accessToken, process.env.JWT_SECRET!, { ignoreExpiration: false });
 
-    req.user = user as IUser;
+    req.user = user as Omit<IUser, "encrypted_password">;
     next();
 };

@@ -21,7 +21,7 @@ const create = async (email: string, password: string): Promise<ResultSetHeader>
     return result;
 };
 
-const get = async (email: string, password: string): Promise<Pick<IUser, "id" | "email"> | null> => {
+const get = async (email: string, password: string): Promise<Omit<IUser, "encrypted_password"> | null> => {
     const queryOptions: QueryOptions = {
         sql: `SELECT * FROM users WHERE email = ?`,
         values: [email]
