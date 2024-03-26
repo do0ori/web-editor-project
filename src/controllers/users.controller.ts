@@ -28,7 +28,7 @@ const logOut = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const userInfo = async (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({ email: req.user?.email });
+    res.status(StatusCodes.OK).json({ email: req.user!.email });
 };
 
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
