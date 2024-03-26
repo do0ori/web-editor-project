@@ -1,6 +1,4 @@
 import mysql, { PoolOptions } from 'mysql2/promise';
-import dotenv from "dotenv";
-dotenv.config();
 
 const access: PoolOptions = {
     host: process.env.DB_HOST,

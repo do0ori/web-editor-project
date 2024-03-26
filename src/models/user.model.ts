@@ -1,8 +1,6 @@
 import { QueryOptions, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import pool from "../utils/mysql.util";
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
-dotenv.config();
 
 interface User {
     id: number;
