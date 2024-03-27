@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model";
 import { StatusCodes } from "http-status-codes";
+import { LoginFail } from "../errors/userFacing.error";
 
 const logIn = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
@@ -18,7 +19,7 @@ const logIn = async (req: Request, res: Response, next: NextFunction) => {
         });
         res.sendStatus(StatusCodes.OK);
     } else {
-        res.sendStatus(StatusCodes.UNAUTHORIZED);
+        throw new LoginFail();
     }
 };
 

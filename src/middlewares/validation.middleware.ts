@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { body, param, validationResult, ValidationChain } from "express-validator";
-import { StatusCodes } from "http-status-codes";
+import { ValidationError } from "../errors/userFacing.error";
 
 type Validator = (fields?: string | string[] | undefined) => ValidationChain;
 
@@ -8,7 +8,7 @@ const checkValidationResult = async (req: Request, res: Response, next: NextFunc
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.sendStatus(StatusCodes.BAD_REQUEST);
+        throw new ValidationError();
     }
 
     next();

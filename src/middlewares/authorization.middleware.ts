@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
 import Note, { INote } from "../models/note.model";
+import { NoteNotFoundError, NoteForbiddenError } from "../errors/userFacing.error";
 
 declare module "express-serve-static-core" {
     interface Request {
@@ -15,11 +15,11 @@ export const authorizeNote = async (req: Request, res: Response, next: NextFunct
     const note = await Note.get(noteId);
 
     if (!note) {
-        return res.sendStatus(StatusCodes.NOT_FOUND);
+        throw new NoteNotFoundError();
     }
 
     if (note.user_id !== userId) {
-        return res.sendStatus(StatusCodes.FORBIDDEN);
+        throw new NoteForbiddenError();
     }
 
     req.note = note;
