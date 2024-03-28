@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import Note from "../models/note.model"
 import { StatusCodes } from "http-status-codes";
+import NotesService from "../services/notes.service";
 
 const getNotes = async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user!.id;
 
-    const notes = await Note.getAll(userId) || [];
+    const notes = await NotesService.getNotes(userId);
 
     res.status(StatusCodes.OK).json(notes);
 };
@@ -13,16 +13,16 @@ const getNotes = async (req: Request, res: Response, next: NextFunction) => {
 const getNote = async (req: Request, res: Response, next: NextFunction) => {
     const noteId = parseInt(req.params.id);
 
-    const note = await Note.get(noteId);
+    const note = await NotesService.getNote(noteId);
 
     res.status(StatusCodes.OK).json(note);
 };
 
 const createNote = async (req: Request, res: Response, next: NextFunction) => {
-    const { title, content } = req.body;
     const userId = req.user!.id;
+    const { title, content } = req.body;
 
-    await Note.create(title, content, userId);
+    await NotesService.createNote(title, content, userId);
 
     res.sendStatus(StatusCodes.CREATED);
 };
@@ -31,7 +31,7 @@ const updateNote = async (req: Request, res: Response, next: NextFunction) => {
     const noteId = parseInt(req.params.id);
     const { title, content } = req.body;
 
-    await Note.update(noteId, title, content);
+    await NotesService.updateNote(noteId, title, content);
 
     res.sendStatus(StatusCodes.OK);
 };
@@ -39,12 +39,12 @@ const updateNote = async (req: Request, res: Response, next: NextFunction) => {
 const deleteNote = async (req: Request, res: Response, next: NextFunction) => {
     const noteId = parseInt(req.params.id);
 
-    await Note.remove(noteId);
+    await NotesService.deleteNote(noteId);
 
     res.sendStatus(StatusCodes.OK);
 };
 
-const notesController = {
+const NotesController = {
     getNotes,
     getNote,
     createNote,
@@ -52,4 +52,4 @@ const notesController = {
     deleteNote
 };
 
-export default notesController;
+export default NotesController;
