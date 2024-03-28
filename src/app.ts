@@ -1,6 +1,6 @@
 import express from "express";
 import "express-async-errors";
-import cookieParser from 'cookie-parser';
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import { CORS_ALLOWED_ORIGIN } from "./settings";
 import usersRouter from "./routes/users.route";

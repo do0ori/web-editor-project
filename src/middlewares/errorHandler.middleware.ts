@@ -4,7 +4,7 @@ import { ApplicationError } from "../errors/base.error";
 
 const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
     if (process.env.NODE_ENV === "development") {
-        console.error(`>> ${new Date().toLocaleString()}: ${err}`);
+        console.error(`>> [${new Date().toLocaleString()}] ${err}`);
     }
 
     // 데이터베이스에서 발생한 중복 입력 에러 처리
