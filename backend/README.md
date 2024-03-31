@@ -27,7 +27,7 @@ npm install
 ## 🎨ERD (Entity Relationship Diagram)
 [🔗dbdigram ERD 바로가기](https://dbdiagram.io/d/Web-Editor-66013ad9ae072629cede68ad)
 
-[![image](https://github.com/do0ori/web-editor-project-BE/assets/71831926/73b3d7b2-ba71-44b3-a40c-85d4365842ef)]()
+![image](https://github.com/do0ori/web-editor-project/assets/71831926/229e558c-e2f5-42a4-96c4-af308404e779)
 
 ## 🖋️API Design
 [🔗API 명세 바로가기](https://do0ori.notion.site/95032abd4b984c4dac59a8f5d8a07a56?v=28dd90d7925a412083741a4466f3e4ba&pvs=4)
