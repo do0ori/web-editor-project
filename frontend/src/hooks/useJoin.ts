@@ -1,11 +1,11 @@
-import { join } from "@/apis/users";
+import { requestJoin } from "@/apis/users";
 import { UserProps } from "@/components/LoginForm";
 import { useNavigate } from "react-router-dom";
 
 export const useJoin = () => {
     const navigate = useNavigate();
     const userJoin = (data: UserProps) => {
-        join(data)
+        requestJoin(data)
             .then((res) => {
                 alert("회원가입 완료");
                 navigate("/login");
