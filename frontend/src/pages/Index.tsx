@@ -1,5 +1,7 @@
-import { IndexTemplate } from "./Index.template";
+import IndexTemplate from "./Index.template";
 
-export const IndexPage = () => {
+const IndexPage = () => {
     return <IndexTemplate />;
 };
+
+export default IndexPage;

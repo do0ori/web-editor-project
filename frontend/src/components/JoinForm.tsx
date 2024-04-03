@@ -1,14 +1,14 @@
-import { useJoin } from "@/hooks/useJoin";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { FormStyle, Title, UserProps } from "./LoginForm";
+import { FormStyle, Header, Title, UserProps } from "./LoginForm";
+import { useJoin } from "@/hooks/useAuth";
 
 interface JoinProps extends UserProps {
     confirmPassword: string;
 }
 
-export const JoinForm: React.FC = () => {
-    const { userJoin } = useJoin();
+const JoinForm: React.FC = () => {
+    const { join } = useJoin();
 
     const {
         register,
@@ -17,11 +17,12 @@ export const JoinForm: React.FC = () => {
     } = useForm<JoinProps>();
 
     const onSubmit = ({ email, password }: JoinProps) => {
-        userJoin({ email, password });
+        join({ email, password });
     };
 
     return (
         <>
+            <Header>Programmers Note Editor</Header>
             <Title>회원가입</Title>
             <FormStyle>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -53,3 +54,5 @@ export const JoinForm: React.FC = () => {
         </>
     );
 };
+
+export default JoinForm;

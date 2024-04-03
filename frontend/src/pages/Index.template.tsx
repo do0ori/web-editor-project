@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import oc from "open-color";
 import { ReactComponent as MussgImage } from "@/assets/mussg.svg";
 
-export const IndexTemplate: React.FC = () => {
+const IndexTemplate: React.FC = () => {
   return (
     <Container>
       <MussgImage height="182" />
@@ -61,3 +61,5 @@ const Footer = styled.footer`
   font-weight: 400;
   color: ${oc.gray[6]};
 `;
+
+export default IndexTemplate;

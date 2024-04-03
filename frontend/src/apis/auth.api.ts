@@ -16,7 +16,11 @@ export const requestLogout = async () => {
     return response.data;
 };
 
+interface CurrentUserResponse {
+    email: string;
+}
+
 export const fetchCurrentUser = async () => {
-    const response = await httpClient.get("/users/me");
+    const response = await httpClient.get<CurrentUserResponse>("/users/me");
     return response.data;
 };

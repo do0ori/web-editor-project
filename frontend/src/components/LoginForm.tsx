@@ -1,16 +1,16 @@
-import { useLogin } from "@/hooks/useLogin";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import oc from "open-color";
+import { useLogin } from "@/hooks/useAuth";
 
 export interface UserProps {
     email: string;
     password: string;
 }
 
-export const LoginForm: React.FC = () => {
-    const { userLogin } = useLogin();
+const LoginForm: React.FC = () => {
+    const { login } = useLogin();
 
     const {
         register,
@@ -19,11 +19,12 @@ export const LoginForm: React.FC = () => {
     } = useForm<UserProps>();
 
     const onSubmit = (data: UserProps) => {
-        userLogin(data);
+        login(data);
     };
 
     return (
         <>
+            <Header>Programmers Note Editor</Header>
             <Title>로그인</Title>
             <FormStyle>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -49,8 +50,14 @@ export const LoginForm: React.FC = () => {
     );
 };
 
+export const Header = styled.header`
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 30px 0 0 30px;
+`;
+
 export const Title = styled.h1`
-    margin: 20vh 0 50px 0;
+    margin: 10vh 0 50px 0;
     font-size: 2.5rem;
     text-align: center;
 `;
@@ -95,3 +102,5 @@ export const FormStyle = styled.div`
         }
     }
 `;
+
+export default LoginForm;
