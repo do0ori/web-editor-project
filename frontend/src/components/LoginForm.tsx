@@ -23,7 +23,7 @@ const LoginForm: React.FC = () => {
     };
 
     return (
-        <>
+        <Container>
             <Header>Programmers Note Editor</Header>
             <Title>로그인</Title>
             <FormStyle>
@@ -46,9 +46,15 @@ const LoginForm: React.FC = () => {
                     </div>
                 </form>
             </FormStyle>
-        </>
+        </Container>
     );
 };
+
+export const Container = styled.div`
+    h1 {
+        margin: 10vh 0 50px 0;
+    }
+`;
 
 export const Header = styled.header`
     font-size: 1.3rem;
@@ -57,7 +63,6 @@ export const Header = styled.header`
 `;
 
 export const Title = styled.h1`
-    margin: 10vh 0 50px 0;
     font-size: 2.5rem;
     text-align: center;
 `;

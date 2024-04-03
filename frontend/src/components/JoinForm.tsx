@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { FormStyle, Header, Title, UserProps } from "./LoginForm";
+import { Container, FormStyle, Header, Title, UserProps } from "./LoginForm";
 import { useJoin } from "@/hooks/useAuth";
 
 interface JoinProps extends UserProps {
@@ -21,7 +21,7 @@ const JoinForm: React.FC = () => {
     };
 
     return (
-        <>
+        <Container>
             <Header>Programmers Note Editor</Header>
             <Title>회원가입</Title>
             <FormStyle>
@@ -51,7 +51,7 @@ const JoinForm: React.FC = () => {
                     </div>
                 </form>
             </FormStyle>
-        </>
+        </Container>
     );
 };
 
