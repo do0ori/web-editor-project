@@ -4,7 +4,7 @@ import styled from "styled-components";
 import oc from "open-color";
 import { useLogin } from "@/hooks/useAuth";
 
-export interface UserProps {
+export interface User {
     email: string;
     password: string;
 }
@@ -16,9 +16,9 @@ const LoginForm: React.FC = () => {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm<UserProps>();
+    } = useForm<User>();
 
-    const onSubmit = (data: UserProps) => {
+    const onSubmit = (data: User) => {
         login(data);
     };
 

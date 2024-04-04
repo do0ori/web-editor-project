@@ -1,5 +1,5 @@
 import { fetchCurrentUser, requestJoin, requestLogin, requestLogout } from "@/apis/auth.api";
-import { UserProps } from "@/components/LoginForm";
+import { User } from "@/components/LoginForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import to from "await-to-js";
 import { isAxiosError } from "axios";
@@ -31,7 +31,7 @@ export const useJoin = () => {
     const navigate = useNavigate();
 
     const { mutateAsync } = useMutation({
-        mutationFn: async (userData: UserProps) => {
+        mutationFn: async (userData: User) => {
             const [error] = await to(requestJoin(userData));
 
             if (isAxiosError(error) && error.response?.status === StatusCodes.CONFLICT) {
@@ -55,7 +55,7 @@ export const useLogin = () => {
     const queryClient = useQueryClient();
 
     const { mutateAsync } = useMutation({
-        mutationFn: async (userData: UserProps) => {
+        mutationFn: async (userData: User) => {
             const [error] = await to(requestLogin(userData));
 
             if (isAxiosError(error) && error.response?.status === StatusCodes.UNAUTHORIZED) {

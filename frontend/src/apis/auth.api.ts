@@ -1,12 +1,12 @@
-import { UserProps } from "@/components/LoginForm";
+import { User } from "@/components/LoginForm";
 import { httpClient } from "@/utils/https";
 
-export const requestLogin = async (userData: UserProps) => {
+export const requestLogin = async (userData: User) => {
     const response = await httpClient.post("/login", userData);
     return response.data;
 };
 
-export const requestJoin = async (userData: UserProps) => {
+export const requestJoin = async (userData: User) => {
     const response = await httpClient.post("/users", userData);
     return response.data;
 };
@@ -16,7 +16,7 @@ export const requestLogout = async () => {
     return response.data;
 };
 
-interface CurrentUserResponse {
+export interface CurrentUserResponse {
     email: string;
 }
 

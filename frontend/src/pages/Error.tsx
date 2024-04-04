@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import { BiSolidError } from "react-icons/bi";
 import oc from "open-color";
-import { Title } from '@/components/LoginForm';
+import { Title } from "@/components/LoginForm";
 
 const ErrorPage: React.FC = () => {
     return (

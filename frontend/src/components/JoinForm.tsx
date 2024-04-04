@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { Container, FormStyle, Header, Title, UserProps } from "./LoginForm";
+import { Container, FormStyle, Header, Title, User } from "./LoginForm";
 import { useJoin } from "@/hooks/useAuth";
 
-interface JoinProps extends UserProps {
+interface JoinProps extends User {
     confirmPassword: string;
 }
 
