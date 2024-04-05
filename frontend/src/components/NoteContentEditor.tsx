@@ -29,7 +29,7 @@ const NoteContentEditor = ({ content, onChangeContent }: NoteContentEditorProps)
             Color.configure({ types: [TextStyle.name, ListItem.name] }),
             TextStyle,
             Placeholder.configure({
-                placeholder: "내용을 입력하세요.",
+                placeholder: "내용을 입력하세요."
             }),
         ],
         content,
@@ -37,11 +37,16 @@ const NoteContentEditor = ({ content, onChangeContent }: NoteContentEditorProps)
     });
 
     useEffect(() => {
-        editor?.commands.setContent(content);
+        if (!editor) return;
+
+        let { from, to } = editor.state.selection;
+
+        editor.commands.setContent(content, false, { preserveWhitespace: "full" });
+        editor.commands.setTextSelection({ from, to });
     }, [editor, content]);
 
     return (
-        <NoteContentEditorStyle editor={editor} onChange={(e) => console.log(e.target)} />
+        <NoteContentEditorStyle editor={editor} />
     );
 };
 

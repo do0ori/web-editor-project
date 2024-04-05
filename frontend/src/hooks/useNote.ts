@@ -25,7 +25,10 @@ export const useUpdateNote = () => {
     const queryClient = useQueryClient();
 
     const { mutateAsync: update } = useMutation({
-        mutationFn: ({ id, ...noteData }: Pick<Note, "id" | "title" | "content">) => updateNote(id, noteData),
+        mutationFn: async ({ id, ...noteData }: Pick<Note, "id" | "title" | "content">) => {
+            await updateNote(id, noteData);
+            alert("저장되었습니다.");
+        },
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notes"] })
     });
 
