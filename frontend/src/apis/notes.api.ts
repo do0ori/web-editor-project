@@ -19,7 +19,7 @@ export const fetchNote = async (id: number) => {
 };
 
 export const createNote = async (noteData: Pick<Note, "title" | "content">) => {
-    const response = await httpClient.post("/notes", noteData);
+    const response = await httpClient.post<Pick<Note, "id">>("/notes", noteData);
     return response.data;
 };
 

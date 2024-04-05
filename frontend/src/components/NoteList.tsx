@@ -2,14 +2,16 @@ import { useNotes } from "@/hooks/useNotes";
 import styled from "styled-components";
 import oc from "open-color";
 import { FaRegFileLines } from "react-icons/fa6";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const NoteList: React.FC = () => {
     const { notes } = useNotes();
 
     return (
         <>
-            <SectionTitle>노트 목록</SectionTitle>
+            <Link to="/notes">
+                <SectionTitle>노트 목록</SectionTitle>
+            </Link>
             <NoteItems>
                 {
                     notes?.map((note) => (

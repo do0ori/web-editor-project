@@ -14,7 +14,7 @@ export const useCreateNote = () => {
     const queryClient = useQueryClient();
 
     const { mutateAsync: create } = useMutation({
-        mutationFn: () => createNote({ title: "", content: "" }),
+        mutationFn: (noteData: Pick<Note, "title" | "content">) => createNote(noteData),
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notes"] })
     });
 
@@ -25,10 +25,7 @@ export const useUpdateNote = () => {
     const queryClient = useQueryClient();
 
     const { mutateAsync: update } = useMutation({
-        mutationFn: async ({ id, ...noteData }: Pick<Note, "id" | "title" | "content">) => {
-            await updateNote(id, noteData);
-            alert("저장되었습니다.");
-        },
+        mutationFn: ({ id, ...noteData }: Pick<Note, "id" | "title" | "content">) => updateNote(id, noteData),
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notes"] })
     });
 
