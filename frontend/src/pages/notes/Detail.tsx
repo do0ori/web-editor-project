@@ -23,7 +23,9 @@ const NoteDetailPage: React.FC<WithCurrentNoteProps> = ({ currentNote }) => {
     return (
         <DetailStyle>
             <Header>
-                <NoteTitleInput title={title} onChangeTitle={setTitle} />
+                <div className="title">
+                    <NoteTitleInput title={title} onChangeTitle={setTitle} />
+                </div>
                 <div className="detail-buttons">
                     <DetailButton onClick={() => update({ id, title, content })}>
                         <FaRegFloppyDisk />
@@ -51,9 +53,14 @@ const Header = styled.header`
     display: flex;
     gap: 30px;
 
+    .title {
+        flex: 1;
+    }
+
     .detail-buttons {
+        flex-shrink: 0;
         display: flex;
-        gap: 10px
+        gap: 10px;
     }
 `;
 
