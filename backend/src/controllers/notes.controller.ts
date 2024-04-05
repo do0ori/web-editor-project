@@ -22,9 +22,9 @@ const createNote = async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user!.id;
     const { title, content } = req.body;
 
-    await NotesService.createNote(title, content, userId);
+    const noteId = await NotesService.createNote(title, content, userId);
 
-    res.sendStatus(StatusCodes.CREATED);
+    res.status(StatusCodes.CREATED).json({ id: noteId });
 };
 
 const updateNote = async (req: Request, res: Response, next: NextFunction) => {

@@ -19,7 +19,9 @@ const getNote = async (noteId: number): Promise<Note> => {
 const createNote = async (title: string, content: string, userId: number) => {
     const result = await NotesRepository.create(title, content, userId);
 
-    if (result.affectedRows !== 1) throw new CreateNoteFail();
+    if (result.affectedRows === 1) return result.insertId;
+
+    throw new CreateNoteFail();
 };
 
 const updateNote = async (noteId: number, title: string, content: string) => {
