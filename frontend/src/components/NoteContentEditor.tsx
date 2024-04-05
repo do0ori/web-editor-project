@@ -1,9 +1,7 @@
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Color } from "@tiptap/extension-color";
-import ListItem from "@tiptap/extension-list-item";
-import TextStyle from "@tiptap/extension-text-style";
 import Placeholder from "@tiptap/extension-placeholder";
+import Underline from "@tiptap/extension-underline";
 import { useEffect } from "react";
 import styled from "styled-components";
 import oc from "open-color";
@@ -26,10 +24,9 @@ const NoteContentEditor = ({ content, onChangeContent }: NoteContentEditorProps)
                     keepAttributes: false,
                 },
             }),
-            Color.configure({ types: [TextStyle.name, ListItem.name] }),
-            TextStyle,
+            Underline,
             Placeholder.configure({
-                placeholder: "내용을 입력하세요.",
+                placeholder: "내용을 입력하세요."
             }),
         ],
         content,
@@ -37,11 +34,16 @@ const NoteContentEditor = ({ content, onChangeContent }: NoteContentEditorProps)
     });
 
     useEffect(() => {
-        editor?.commands.setContent(content);
+        if (!editor) return;
+
+        let { from, to } = editor.state.selection;
+
+        editor.commands.setContent(content, false, { preserveWhitespace: "full" });
+        editor.commands.setTextSelection({ from, to });
     }, [editor, content]);
 
     return (
-        <NoteContentEditorStyle editor={editor} onChange={(e) => console.log(e.target)} />
+        <NoteContentEditorStyle editor={editor} />
     );
 };
 
@@ -62,8 +64,6 @@ const NoteContentEditorStyle = styled(EditorContent)`
             pointer-events: none;
         }
 
-        /* https://tiptap.dev/docs/editor/installation/react#7-the-complete-setup */
-
         > * + * {
             margin-top: 0.75em;
         }
@@ -77,8 +77,10 @@ const NoteContentEditorStyle = styled(EditorContent)`
         }
 
         code {
-            background-color: rgba(#616161, 0.1);
-            color: #616161;
+            background-color: ${oc.gray[2]};
+            border-radius: 0.2rem;
+            font-size: 0.8rem;
+            padding: 3px;
         }
 
         pre {
@@ -103,12 +105,12 @@ const NoteContentEditorStyle = styled(EditorContent)`
 
         blockquote {
             padding-left: 1rem;
-            border-left: 2px solid rgba(#0D0D0D, 0.1);
+            border-left: 2px solid ${oc.gray[5]};
         }
 
         hr {
             border: none;
-            border-top: 2px solid rgba(#0D0D0D, 0.1);
+            border-top: 2px solid ${oc.gray[3]};
             margin: 2rem 0;
         }
     }

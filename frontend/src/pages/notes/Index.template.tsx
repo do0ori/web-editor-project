@@ -1,5 +1,5 @@
 import NoteList from "@/components/NoteList";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FaRegSquarePlus, FaUser } from "react-icons/fa6";
 import { FiLogOut } from "react-icons/fi";
@@ -15,6 +15,13 @@ const NotesIndexTemplate = ({ currentUserEmail }: NotesIndexTemplateProps) => {
     const { logout } = useLogout();
     const { create } = useCreateNote();
 
+    const navigate = useNavigate();
+
+    const onCreate = async () => {
+        const { id } = await create({ title: "", content: "" });
+        navigate(`/notes/${id}`);
+    };
+
     return (
         <IndexTemplateStyle>
             <div className="side-bar">
@@ -26,7 +33,7 @@ const NotesIndexTemplate = ({ currentUserEmail }: NotesIndexTemplateProps) => {
                     <FiLogOut />
                     <p>로그아웃</p>
                 </SideBarButton>
-                <SideBarButton onClick={() => create()}>
+                <SideBarButton onClick={onCreate}>
                     <FaRegSquarePlus />
                     <p>노트 생성</p>
                 </SideBarButton>
@@ -45,6 +52,15 @@ const IndexTemplateStyle = styled.div`
 
     p {
         margin: 0;
+    }
+
+    a:link {
+        text-decoration: none;
+        color: none;
+    }
+
+    a:visited, a:active {
+        color: inherit;
     }
 
     .side-bar {

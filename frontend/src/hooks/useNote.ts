@@ -14,7 +14,7 @@ export const useCreateNote = () => {
     const queryClient = useQueryClient();
 
     const { mutateAsync: create } = useMutation({
-        mutationFn: () => createNote({ title: "", content: "" }),
+        mutationFn: (noteData: Pick<Note, "title" | "content">) => createNote(noteData),
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notes"] })
     });
 

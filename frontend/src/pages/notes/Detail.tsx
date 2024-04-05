@@ -6,6 +6,7 @@ import oc from "open-color";
 import { FaRegFloppyDisk, FaRegTrashCan } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { useDeleteNote, useUpdateNote } from "@/hooks/useNote";
+import { useNavigate } from "react-router-dom";
 
 const NoteDetailPage: React.FC<WithCurrentNoteProps> = ({ currentNote }) => {
     const id = currentNote.id;
@@ -15,6 +16,18 @@ const NoteDetailPage: React.FC<WithCurrentNoteProps> = ({ currentNote }) => {
     const { update } = useUpdateNote();
     const { remove } = useDeleteNote();
 
+    const navigate = useNavigate();
+
+    const onSave = async () => {
+        await update({ id, title, content });
+        alert("저장되었습니다.");
+    };
+
+    const onDelete = async () => {
+        await remove(id);
+        navigate("/notes");
+    };
+
     useEffect(() => {
         setTitle(currentNote.title);
         setContent(currentNote.content);
@@ -23,13 +36,15 @@ const NoteDetailPage: React.FC<WithCurrentNoteProps> = ({ currentNote }) => {
     return (
         <DetailStyle>
             <Header>
-                <NoteTitleInput title={title} onChangeTitle={setTitle} />
+                <div className="title">
+                    <NoteTitleInput title={title} onChangeTitle={setTitle} />
+                </div>
                 <div className="detail-buttons">
-                    <DetailButton onClick={() => update({ id, title, content })}>
+                    <DetailButton onClick={onSave}>
                         <FaRegFloppyDisk />
                         <p>저장</p>
                     </DetailButton>
-                    <DetailButton onClick={() => remove(id)}>
+                    <DetailButton onClick={onDelete}>
                         <FaRegTrashCan />
                         <p>삭제</p>
                     </DetailButton>
@@ -51,9 +66,14 @@ const Header = styled.header`
     display: flex;
     gap: 30px;
 
+    .title {
+        flex: 1;
+    }
+
     .detail-buttons {
+        flex-shrink: 0;
         display: flex;
-        gap: 10px
+        gap: 10px;
     }
 `;
 

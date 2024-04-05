@@ -8,26 +8,30 @@ interface NoteTitleInputProps {
 
 const NoteTitleInput = ({ title, onChangeTitle }: NoteTitleInputProps) => {
     return (
-        <NoteTitleInputStyle>
-            <input type="text" placeholder="제목 없음" value={title} onChange={(e) => onChangeTitle(e.target.value)} />
-        </NoteTitleInputStyle>
+        <NoteTitleInputStyle
+            contentEditable
+            placeholder="제목 없음"
+            onKeyDown={(e) => { if (e.key === "Enter") e.preventDefault() }}
+            onBlur={(e) => onChangeTitle(e.target.textContent || "")}
+            dangerouslySetInnerHTML={{ __html: title }}
+        />
     );
 };
 
-const NoteTitleInputStyle = styled.div`
-    flex: 1;
+interface NoteTitleInputStyleProps {
+    placeholder: string;
+}
 
-    input {
-        width: 100%;
-        border: none;
-        padding: 0;
-        outline: none;
-        font-size: 2rem;
-        font-weight: bold;
+const NoteTitleInputStyle = styled.h1<NoteTitleInputStyleProps>`
+    width: 100%;
+    border: none;
+    padding: 0;
+    outline: none;
+    margin: 0;
 
-        &::placeholder {
-            color: ${oc.gray[6]};
-        }
+    &:empty:before {
+        content: attr(placeholder);
+        color: ${oc.gray[6]};
     }
 `;
 
