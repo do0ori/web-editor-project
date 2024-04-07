@@ -24,7 +24,9 @@ const LoginForm: React.FC = () => {
 
     return (
         <Container>
-            <Header>Programmers Note Editor</Header>
+            <Header>
+                <Link to="/">Programmers Note Editor</Link>
+            </Header>
             <Title>로그인</Title>
             <FormStyle>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -53,6 +55,15 @@ const LoginForm: React.FC = () => {
 export const Container = styled.div`
     h1 {
         margin: 10vh 0 50px 0;
+    }
+
+    a:link {
+        text-decoration: none;
+        color: none;
+    }
+
+    a:visited, a:active {
+        color: inherit;
     }
 `;
 

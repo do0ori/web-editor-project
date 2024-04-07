@@ -22,7 +22,9 @@ const JoinForm: React.FC = () => {
 
     return (
         <Container>
-            <Header>Programmers Note Editor</Header>
+            <Header>
+                <Link to="/">Programmers Note Editor</Link>
+            </Header>
             <Title>회원가입</Title>
             <FormStyle>
                 <form onSubmit={handleSubmit(onSubmit)}>
