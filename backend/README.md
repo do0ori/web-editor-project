@@ -15,8 +15,14 @@ npm install
     ```bash
     npm start
     ```
+
+- 테스트
+
+    ```bash
+    npm test
+    ```
     
-- 빌드 및 테스트
+- 빌드
     
     ```bash
     npm run build && serve -s build
