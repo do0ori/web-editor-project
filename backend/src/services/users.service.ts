@@ -27,9 +27,16 @@ const signUp = async (email: string, password: string) => {
     if (result.affectedRows !== 1) throw new SignUpFail();
 };
 
+const isUserExist = async (email: string): Promise<boolean> => {
+    const user = await UsersRepository.get(email);
+
+    return Boolean(user);
+};
+
 const UsersService = {
     logIn,
-    signUp
+    signUp,
+    isUserExist
 };
 
 export default UsersService;
