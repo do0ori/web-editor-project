@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notes-be-config
+  namespace: prgms-notes
+data:
+  DB_HOST: notes-db.db
+  DB_PORT: "3306"
+  DB_USER: prgms
+  DB_PASSWORD: ####
+  # Add all your environment variables
+  CORS_ALLOWED_ORIGIN: http://localhost:30030
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: notes-be
+  namespace: prgms-notes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: notes-be
+  template:
+    metadata:
+      labels:
+        run: notes-be
+    spec:
+      containers:
+      - name: notes-backend
+        image: do0ori/sprint4-be:latest
+        imagePullPolicy: Always
+        envFrom:
+          - configMapRef:
+              name: notes-be-config
+
+---
+
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: notes-be
+  labels:
+    run: notes-be
+  namespace: prgms-notes
+spec:
+  type: NodePort
+  selector:
+    run: notes-be
+  ports:
+  - port: 3031
+    targetPort: 3031
+    nodePort: 30031

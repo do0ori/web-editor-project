@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  db:
+    image: mariadb:11.2.2
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+    ports:
+      - 3032:3306
+    networks:
+      - notes
+    volumes:
+      - ./db:/var/lib/mysql
+
+  backend:
+    image: sprint4-be:latest
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ####
+      # Add all your environment variables
+    ports:
+      - 3031:3031
+    networks:
+      - notes
+
+  frontend:
+    image: sprint4-fe:latest
+    environment:
+      REACT_APP_BASE_URL: http://localhost:3031/api
+      REACT_APP_DEFAULT_TIMEOUT: 30000
+    ports:
+      - 3000:3000
+    networks:
+      - notes
+
+networks:
+  notes: {}
